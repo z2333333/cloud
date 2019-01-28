@@ -94,27 +94,27 @@ public class RedisPoolUtil {
         return result;
     }
 
-    public static void main(String[] args) {
-        Jedis jedis = RedisPool.getJedis();
-
-        RedisShardedPoolUtil.set("keyTest","value");
-
-        String value = RedisShardedPoolUtil.get("keyTest");
-
-        RedisShardedPoolUtil.setEx("keyex","valueex",60*10);
-
-        RedisShardedPoolUtil.expire("keyTest",60*20);
-
-        RedisShardedPoolUtil.del("keyTest");
-
-
-        String aaa = RedisShardedPoolUtil.get(null);
-        System.out.println(aaa);
-
-        System.out.println("end");
-
-
-    }
+//    public static void main(String[] args) {
+//        Jedis jedis = RedisPool.getJedis();
+//
+//        RedisShardedPoolUtil.set("keyTest","value");
+//
+//        String value = RedisShardedPoolUtil.get("keyTest");
+//
+//        RedisShardedPoolUtil.setEx("keyex","valueex",60*10);
+//
+//        RedisShardedPoolUtil.expire("keyTest",60*20);
+//
+//        RedisShardedPoolUtil.del("keyTest");
+//
+//
+//        String aaa = RedisShardedPoolUtil.get(null);
+//        System.out.println(aaa);
+//
+//        System.out.println("end");
+//
+//
+//    }
 
 
 }

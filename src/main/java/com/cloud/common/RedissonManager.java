@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 
 /**
  * Created by geely
+ * 分布式锁用于关闭订单
  */
 @Component
 @Slf4j

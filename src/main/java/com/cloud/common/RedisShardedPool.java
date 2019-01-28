@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by geely
+ * 初始化分布式redis,基本只是调用jedis的API,其背后原理为一致性hash算法
  */
 public class RedisShardedPool {
     private static ShardedJedisPool pool;//sharded jedis连接池
@@ -28,8 +29,6 @@ public class RedisShardedPool {
     private static Integer redis1Port = Integer.parseInt(PropertiesUtil.getProperty("redis1.port"));
     private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
     private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
-
-
 
 
     private static void initPool(){

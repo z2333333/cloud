@@ -5,6 +5,7 @@ import redis.clients.jedis.ShardedJedis;
 
 /**
  * Created by geely
+ * RedisShardedPool(分布式redis)的工具类
  */
 @Slf4j
 public class RedisShardedPoolUtil {
@@ -125,27 +126,27 @@ public class RedisShardedPoolUtil {
     }
 
 
-    public static void main(String[] args) {
-        ShardedJedis jedis = com.cloud.common.RedisShardedPool.getJedis();
-
-        com.cloud.util.RedisPoolUtil.set("keyTest","value");
-
-        String value = com.cloud.util.RedisPoolUtil.get("keyTest");
-
-        com.cloud.util.RedisPoolUtil.setEx("keyex","valueex",60*10);
-
-        com.cloud.util.RedisPoolUtil.expire("keyTest",60*20);
-
-        com.cloud.util.RedisPoolUtil.del("keyTest");
-
-
-        String aaa = com.cloud.util.RedisPoolUtil.get(null);
-        System.out.println(aaa);
-
-        System.out.println("end");
-
-
-    }
+//    public static void main(String[] args) {
+//        ShardedJedis jedis = com.cloud.common.RedisShardedPool.getJedis();
+//
+//        com.cloud.util.RedisPoolUtil.set("keyTest","value");
+//
+//        String value = com.cloud.util.RedisPoolUtil.get("keyTest");
+//
+//        com.cloud.util.RedisPoolUtil.setEx("keyex","valueex",60*10);
+//
+//        com.cloud.util.RedisPoolUtil.expire("keyTest",60*20);
+//
+//        com.cloud.util.RedisPoolUtil.del("keyTest");
+//
+//
+//        String aaa = com.cloud.util.RedisPoolUtil.get(null);
+//        System.out.println(aaa);
+//
+//        System.out.println("end");
+//
+//
+//    }
 
 
 
