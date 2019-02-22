@@ -32,6 +32,14 @@ public class CartServiceImpl implements ICartService {
     @Autowired
     private ProductMapper productMapper;
 
+    /**
+     * 购物车中添加商品
+     * 逻辑包含检查库存数量是否满足购物车数量
+     * @param userId
+     * @param productId
+     * @param count
+     * @return
+     */
     public ServerResponse<CartVo> add(Integer userId,Integer productId,Integer count){
         if(productId == null || count == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());

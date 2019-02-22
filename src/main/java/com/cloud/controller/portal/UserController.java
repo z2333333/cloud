@@ -3,6 +3,7 @@ package com.cloud.controller.portal;
 import com.cloud.common.Const;
 import com.cloud.common.ResponseCode;
 import com.cloud.common.ServerResponse;
+import com.cloud.dao.mapper.UserMapper;
 import com.cloud.dao.model.User;
 import com.cloud.service.IUserService;
 import com.cloud.util.CookieUtil;
@@ -30,6 +31,8 @@ public class UserController {
     @Autowired
     private IUserService iUserService;
 
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 用户登录
@@ -50,6 +53,42 @@ public class UserController {
 
         }
         return response;
+    }
+
+    /**
+     * 用于压测的批量登陆
+     * 直接在redis中注册n个用户,压测时携带cookie直接取
+     * @return
+     */
+    @RequestMapping(value = "batchLogin.do")
+    @ResponseBody
+    public ServerResponse<String> batchLogin(){
+        int resultCount = userMapper.checkUsername("zx0");
+        if(resultCount == 0 ){
+            for (int i = 0; i < 50; i++) {
+                int serial=0;
+                String email = "zx"+serial+"@aa.com";
+                User user = new User();
+                user.setUsername("zx"+serial);
+                user.setPassword("123");
+                user.setEmail(email);
+                user.setPhone("13800138000");
+                user.setQuestion("问题");
+                user.setAnswer("答案");
+                register(user);
+                serial++;
+            }
+        }
+        int serial=0;
+        String password = "123";
+        String redis_key = "zxLogin";
+        for (int i = 0; i < 50; i++) {
+            String username = "zx"+serial;
+            ServerResponse<User> response = iUserService.login(username,password);
+            RedisShardedPoolUtil.set(redis_key+serial, JsonUtil.obj2String(response.getData()));
+            serial++;
+        }
+        return ServerResponse.createBySuccessMessage("Success!");
     }
 
     @RequestMapping(value = "logout.do",method = RequestMethod.POST)
