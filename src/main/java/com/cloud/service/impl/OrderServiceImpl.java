@@ -69,6 +69,9 @@ public class OrderServiceImpl implements IOrderService {
 
 
     public  ServerResponse createOrder(Integer userId,Integer shippingId){
+        /**
+         * 测试需要注释减少库存方法
+         */
         //从购物车中获取数据
         List<Cart> cartList = cartMapper.selectCheckedCartByUserId(userId);
 
@@ -96,7 +99,7 @@ public class OrderServiceImpl implements IOrderService {
         orderItemMapper.batchInsert(orderItemList);
 
         //生成成功,我们要减少我们产品的库存
-        this.reduceProductStock(orderItemList);
+//        this.reduceProductStock(orderItemList);
         //清空一下购物车
         this.cleanCart(cartList);
 
@@ -245,7 +248,7 @@ public class OrderServiceImpl implements IOrderService {
             }
 
             //校验库存
-            if(cartItem.getQuantity() > product.getStock()){
+            if(cartItem.getQuantity() > product.getStock() || product.getStock()==0){
                 return ServerResponse.createByErrorMessage("产品"+product.getName()+"库存不足");
             }
 

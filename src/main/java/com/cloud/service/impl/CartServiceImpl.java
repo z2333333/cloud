@@ -34,7 +34,7 @@ public class CartServiceImpl implements ICartService {
 
     /**
      * 购物车中添加商品
-     * 逻辑包含检查库存数量是否满足购物车数量
+     * 购物车逻辑:列出该用户购物车表中的记录,如果没有当前商品则新增,有则增加数量->第二步判断库存,库存充足则更新库存,库存不够则将购物车该商品数量置0
      * @param userId
      * @param productId
      * @param count
