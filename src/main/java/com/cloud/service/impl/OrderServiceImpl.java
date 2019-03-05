@@ -18,12 +18,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import javax.jms.Destination;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +70,8 @@ public class OrderServiceImpl implements IOrderService {
     private ProductMapper productMapper;
     @Autowired
     private ShippingMapper shippingMapper;
-
+    @Resource
+    private JmsMessagingTemplate jmsMessagingTemplate;
 
     public  ServerResponse createOrder(Integer userId,Integer shippingId){
         /**
@@ -389,7 +394,9 @@ public class OrderServiceImpl implements IOrderService {
         payInfoMapper.insert(payInfo);
 
         //模拟积分发放
-        integralSend();
+//        integralSend();
+        Destination destination = new ActiveMQQueue("test.queue");
+        jmsMessagingTemplate.convertAndSend(destination, userId);
         return ServerResponse.createBySuccess();
     }
 
