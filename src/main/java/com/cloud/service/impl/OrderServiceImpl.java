@@ -680,6 +680,7 @@ public class OrderServiceImpl implements IOrderService {
                 if(stock == null){
                     continue;
                 }
+                //关闭订单后更新库存,这也是要用分布式锁的原因 -->也能把这个服务抽取出来就不用了
                 Product product = new Product();
                 product.setId(orderItem.getProductId());
                 product.setStock(stock+orderItem.getQuantity());
